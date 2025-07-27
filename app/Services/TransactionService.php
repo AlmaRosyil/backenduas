@@ -66,7 +66,7 @@ class TransactionService
                     'merchant_id' => ['Merchant not found.'],
                 ]);
             }
-if (Auth::id() !== $merchant->keeper_id) {
+if (!Auth::id() !== $merchant->keeper_id) {
     throw ValidationException::withMessages([
         'authorization' => ['You are not the keeper of this merchant.'],
     ]);

@@ -31,7 +31,7 @@ class AuthRepository
             'message'=>'The provided do not match our records.',
         ],401);   
         }
-request()->session()->regenerate();
+
 
         $user = Auth::user();
         return response()->json([

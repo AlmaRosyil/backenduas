@@ -1,4 +1,4 @@
-  <?php
+<?php
 
 namespace App\Http\Resources;
 
@@ -20,10 +20,5 @@ class ProductResource extends JsonResource
         $data['thumbnail'] = $this->thumbnail ? asset('storage/' . $this->thumbnail) : null;
 
         return $data;
-    }
-}
-
-
-
     }
 }

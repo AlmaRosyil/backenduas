@@ -10,17 +10,20 @@ return [
     |--------------------------------------------------------------------------
     |
     | Requests from the following domains / hosts will receive stateful API
-    | authentication cookies. Typically, these should include your local
-    | and production domains which access your API via a frontend SPA.
+    | authentication cookies. This is typically used when your frontend is
+    | served from a different subdomain or port than your API.
     |
     */
 
-    'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
-        '%s%s',
-        'localhost,localhost:3000,127.0.0.1,backenduas-production.up.railway.app,feuas-production.up.railway.app,localhost:5173,127.0.0.1:8000,::1',
-        Sanctum::currentApplicationUrlWithPort(),
-        // Sanctum::currentRequestHost(),
-    ))),
+    'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', implode(',', [
+        'localhost',
+        'localhost:5173',
+        '127.0.0.1',
+        '127.0.0.1:8000',
+        '::1',
+        'feuas-production.up.railway.app',
+        'backenduas-production.up.railway.app',
+    ]))),
 
     /*
     |--------------------------------------------------------------------------
@@ -28,9 +31,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | This array contains the authentication guards that will be checked when
-    | Sanctum is trying to authenticate a request. If none of these guards
-    | are able to authenticate the request, Sanctum will use the bearer
-    | token that's present on an incoming request for authentication.
+    | Sanctum is trying to authenticate a request. Typically, this should
+    | include the "web" guard.
     |
     */
 
@@ -41,9 +43,8 @@ return [
     | Expiration Minutes
     |--------------------------------------------------------------------------
     |
-    | This value controls the number of minutes until an issued token will be
-    | considered expired. This will override any values set in the token's
-    | "expires_at" attribute, but first-party sessions are not affected.
+    | This value controls the number of minutes until an issued token expires.
+    | If this value is null, personal access tokens do not expire.
     |
     */
 
@@ -54,11 +55,7 @@ return [
     | Token Prefix
     |--------------------------------------------------------------------------
     |
-    | Sanctum can prefix new tokens in order to take advantage of numerous
-    | security scanning initiatives maintained by open source platforms
-    | that notify developers if they commit tokens into repositories.
-    |
-    | See: https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning
+    | This value configures the token prefix, if any, for personal access tokens.
     |
     */
 
@@ -66,19 +63,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Sanctum Middleware
+    | Middleware
     |--------------------------------------------------------------------------
     |
-    | When authenticating your first-party SPA with Sanctum you may need to
-    | customize some of the middleware Sanctum uses while processing the
-    | request. You may change the middleware listed below as required.
+    | These middleware will be assigned to every Sanctum route, giving you the
+    | chance to customize the request handling for first-party SPA and token
+    | authentication.
     |
     */
 
     'middleware' => [
-        'authenticate_session' => Laravel\Sanctum\Http\Middleware\AuthenticateSession::class,
-        'encrypt_cookies' => Illuminate\Cookie\Middleware\EncryptCookies::class,
-        'validate_csrf_token' => Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
+        'authenticate_session' => \Laravel\Sanctum\Http\Middleware\AuthenticateSession::class,
+        'encrypt_cookies' => \Illuminate\Cookie\Middleware\EncryptCookies::class,
+        'validate_csrf_token' => \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
     ],
 
 ];

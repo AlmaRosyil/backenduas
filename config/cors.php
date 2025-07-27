@@ -3,7 +3,7 @@
 return [
     'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout'],
     'allowed_methods' => ['*'],
-    'allowed_origins' => ['https://feuas-production.up.railway.app'], // GANTI ke domain React
+    'allowed_origins' => ['https://feuas-production.up.railway.app','https://projectkelompok1.wuaze.com'], // GANTI ke domain React
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
     'exposed_headers' => [],

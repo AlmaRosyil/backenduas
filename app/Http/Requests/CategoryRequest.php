@@ -21,10 +21,13 @@ class CategoryRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-   public function rules(): array
+    public function rules(): array
     {
         return [
             //
+            'name' => 'required|string|max:255|unique:categories,name,' . $this->route('category'),
+            'tagline' => 'required|string|max:255',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 

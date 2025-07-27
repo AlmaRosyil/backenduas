@@ -21,6 +21,7 @@ return [
         '127.0.0.1',
         '127.0.0.1:8000',
         '::1',
+        'projectkelompok1.wuaze.com',
         'feuas-production.up.railway.app',
         'backenduas-production.up.railway.app',
     ]))),
